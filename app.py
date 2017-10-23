@@ -14,11 +14,6 @@ if '--debug' in sys.argv[1:] or 'SERVER_DEBUG' in os.environ:
     # It must be set at the beginning of the script.
     bottle.debug(True)
 
-def wsgi_app():
-    """Returns the application to make available through wfastcgi. This is used
-    when the site is published to Microsoft Azure."""
-    return bottle.default_app()
-
 if __name__ == '__main__':
     PROJECT_ROOT = os.path.abspath(os.path.dirname(__file__))
     STATIC_ROOT = os.path.join(PROJECT_ROOT, 'static').replace('\\', '/')
@@ -36,4 +31,4 @@ if __name__ == '__main__':
         return bottle.static_file(filepath, root=STATIC_ROOT)
 
     # Starts a local test server.
-    bottle.run(server='wsgiref', host=HOST, port=PORT)
+    bottle.run(host='0.0.0.0', port=8080, debug=True)
